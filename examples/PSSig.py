@@ -6,7 +6,7 @@ David Pointcheval, Olivier Sanders: Short Randomizable Signatures. CT-RSA 2016: 
 
 """
 
-from bp.bp import BpGroup
+from bplib.bp import BpGroup
 
 def setup():
 	G = BpGroup()
