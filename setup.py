@@ -16,7 +16,7 @@ setup(name='bplib',
       bilinear pairings, as used in modern cryptography. 
 
       It provides python bindings to Diego Aranha's OpenPairing libraries, that use OpenSSL math 
-      and crypto primitives. The bplibrary is an extension of petlib that provides easy to use 
+      and crypto primitives. The bplib library is an extension of petlib that provides easy to use 
       support for maths and ciphers used un modern Privacy Enhancing Technologies."
 
       """,
@@ -35,7 +35,7 @@ setup(name='bplib',
             "pytest-cov >= 1.8.1",
             "petlib >= 0.0.30"
             ],
-      cffi_modules=["bplib/compile.py:_FFI"],
+      cffi_modules=["bplib/compile.py:ffibuilder"],
       install_requires=[
             "cffi >= 1.0.0",
             "pycparser >= 2.10",

@@ -30,11 +30,11 @@ cfiles = [r"bp_fp12.c",  r"bp_fp6.c", r"bp_g2.c",
 print("Path: %s" % csrc)
 csources = list(map(lambda x: r"bplib/src/"+x,cfiles))
 
-from petlib.compile import _FFI as petlib_FFI
-_FFI = cffi.FFI()
-_FFI.include(petlib_FFI)
+from petlib.compile import _FFI as petlib_ffibuilder
+ffibuilder = cffi.FFI()
+ffibuilder.include(petlib_ffibuilder)
 
-_FFI.set_source("bplib._bplib","""
+ffibuilder.set_source("bplib._bplib","""
 #include <openssl/crypto.h>
 #include <openssl/err.h>
 #include <openssl/bn.h>
@@ -45,10 +45,6 @@ _FFI.set_source("bplib._bplib","""
 
 #include <bp.h>
 
-// extern BP_GROUP *BP_GROUP_new(void);
-
-
-
     """, libraries=libraries, 
     extra_compile_args=extra_compile_args, 
     include_dirs=include_dirs,
@@ -57,7 +53,7 @@ _FFI.set_source("bplib._bplib","""
     sources=csources)
 
 
-_FFI.cdef("""
+ffibuilder.cdef("""
 
 // BP Functions
 typedef ... BP_GROUP;
@@ -220,4 +216,4 @@ int GT_ELEMs_pairing(const BP_GROUP *group, GT_ELEM *r, size_t num,
 
 if __name__ == "__main__":
     print("Compiling bp ...")
-    _FFI.compile(verbose=True)
+    ffibuilder.compile(verbose=True)
