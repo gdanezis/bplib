@@ -12,14 +12,7 @@ setup(name='bplib',
       url=r'https://pypi.python.org/pypi/bplib/',
       packages=['bplib'],
       license="LGPL",
-      long_description="""The bplib is a library implementing support for computations on groups supporting 
-      bilinear pairings, as used in modern cryptography. 
-
-      It provides python bindings to Diego Aranha's OpenPairing libraries, that use OpenSSL math 
-      and crypto primitives. The bplib library is an extension of petlib that provides easy to use 
-      support for maths and ciphers used un modern Privacy Enhancing Technologies."
-
-      """,
+      long_description=bplib.__doc__,
 
       setup_requires=["cffi>=1.0.0",
                       "pytest >= 2.6.4",
