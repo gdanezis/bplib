@@ -5,14 +5,21 @@ from setuptools import setup
 import bplib
 
 setup(name='bplib',
-      # version=petlib.VERSION,
-      # description='A library implementing a number of Privacy Enhancing Technologies (PETs)',
+      version=bplib.VERSION,
+      description='A bilinear pairing library for petlib.',
       author='George Danezis',
       author_email='g.danezis@ucl.ac.uk',
       url=r'https://pypi.python.org/pypi/bplib/',
       packages=['bplib'],
       license="LGPL",
-      #long_description="""A library wrapping Open SSL low-level cryptographic libraries to build Privacy Enhancing Technoloies (PETs)""",
+      long_description="""The bplib is a library implementing support for computations on groups supporting 
+      bilinear pairings, as used in modern cryptography. 
+
+      It provides python bindings to Diego Aranha's OpenPairing libraries, that use OpenSSL math 
+      and crypto primitives. The bplibrary is an extension of petlib that provides easy to use 
+      support for maths and ciphers used un modern Privacy Enhancing Technologies."
+
+      """,
 
       setup_requires=["cffi>=1.0.0",
                       "pytest >= 2.6.4",
