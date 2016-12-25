@@ -1,4 +1,7 @@
-from . import bp
+try:
+	from . import bp
+except:
+	pass
 
 __doc__ = """The ``bplib`` is a library implementing support for computations on groups supporting 
 bilinear pairings, as used in modern cryptography. 
