@@ -8,8 +8,12 @@ try:
     print("OpenSSL Path: %s" % os.environ["OPENSSL_DIR"])
     openssl_dir = os.environ["OPENSSL_DIR"]
 except:
-    print("Using default openssl location. Set OPENSSL_DIR env variable to change it.")
-    openssl_dir = '../openssl'
+    if (platform.system() == "Darwin"
+        and os.path.isdir('/usr/local/opt/openssl/include')):
+        openssl_dir = '/usr/local/opt/openssl/include'
+    else:
+        print("Using default openssl location. Set OPENSSL_DIR env variable to change it.")
+        openssl_dir = '../openssl'
 
 
 # Determine the include and src directory
@@ -21,7 +25,7 @@ csrc = "include" # abspath(join(dirname(__file__),"../src"))
 link_args = []
 libraries=["crypto"]
 extra_compile_args=['-Wno-deprecated-declarations']
-include_dirs=[csrc]
+include_dirs=[csrc, openssl_dir]
 library_dirs=[]
 
 cfiles = [r"bp_fp12.c",  r"bp_fp6.c", r"bp_g2.c", 
