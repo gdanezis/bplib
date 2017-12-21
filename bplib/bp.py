@@ -301,7 +301,8 @@ class G1Elem(Ops):
         return newpt
 
     def __del__(self):
-        _C.G1_ELEM_clear_free(self.elem);
+        if self.elem != None:
+            _C.G1_ELEM_clear_free(self.elem);
 
 
 class G2Elem(Ops):
@@ -317,6 +318,10 @@ class G2Elem(Ops):
         """ Returns and element of G2. """
         self.group = group
         self.elem = _C.G2_ELEM_new(group.bpg);
+
+    def __del__(self):
+        if self.elem != None:
+            _C.G2_ELEM_clear_free(self.elem);
 
     def __copy__(self):
         """ Copy the G2 point. """
@@ -437,6 +442,10 @@ class GTElem(Ops):
         self.group = group
         self.elem = _C.GT_ELEM_new(group.bpg);
 
+    def __del__(self):
+        if self.elem != None:
+            _C.GT_clear_free(self.elem);
+
     def __copy__(self):
         """ Copy the G2 point. 
         Example:
@@ -486,7 +495,7 @@ class GTElem(Ops):
         return newpt
 
     def mul(self, other):
-        """ Returns the sum of two points. 
+        """ Returns the product of two points. 
             Example:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())

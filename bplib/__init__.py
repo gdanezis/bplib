@@ -41,4 +41,4 @@ As expected the ``pair`` operations is additive:
 
 """
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
