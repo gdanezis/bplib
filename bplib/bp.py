@@ -420,7 +420,7 @@ class GTElem(Ops):
 
     @staticmethod
     def zero(group):
-        """ Returns the element at infinity for G2. """
+        """ Returns the element at infinity for GT. """
         zero_pt = GTElem(group)
         _check( _C.GT_ELEM_zero(zero_pt.elem) )
         return zero_pt
@@ -431,7 +431,7 @@ class GTElem(Ops):
 
     @staticmethod
     def one(group):
-        """ Returns the element at infinity for G2. """
+        """ Returns the element at infinity for GT. """
         one_pt = GTElem(group)
         _check( _C.GT_ELEM_set_to_unity(group.bpg, one_pt.elem) )
         return one_pt
@@ -441,7 +441,7 @@ class GTElem(Ops):
         return int(_C.GT_ELEM_is_unity(self.group.bpg, self.elem)) == 1
 
     def __init__(self, group):
-        """ Returns and element of G2. """
+        """ Returns and element of GT. """
         self.group = group
         self.elem = _C.GT_ELEM_new(group.bpg);
 
@@ -450,7 +450,7 @@ class GTElem(Ops):
             _C.GT_clear_free(self.elem);
 
     def __copy__(self):
-        """ Copy the G2 point. 
+        """ Copy the GT element. 
         Example:
             >>> G = BpGroup()
             >>> g1, g2 = G.gen1(), G.gen2()
@@ -464,7 +464,7 @@ class GTElem(Ops):
         return newpt
 
     def add(self, other):
-        """ Returns the sum of two points. 
+        """ Returns the sum of two GT elements. 
             Example:
                 >>> G = BpGroup()
                 >>> zero = GTElem.zero(G)
@@ -482,7 +482,7 @@ class GTElem(Ops):
         return newpt
 
     def sub(self, other):
-        """ Returns the difference of two points. 
+        """ Returns the difference of two GT elements. 
             Example:
                 >>> G = BpGroup()
                 >>> zero = GTElem.zero(G)
@@ -498,7 +498,7 @@ class GTElem(Ops):
         return newpt
 
     def mul(self, other):
-        """ Returns the product of two points. 
+        """ Returns the product of two elements. 
             Example:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())
@@ -513,15 +513,8 @@ class GTElem(Ops):
         _check( _C.GT_ELEM_mul(self.group.bpg, newpt.elem, self.elem, other.elem, _FFI.NULL) )
         return newpt
 
-
-    # def double(self):
-    #     """ Returns the double of the G2 point. """
-    #     newpt = G2Elem(self.group)
-    #     _check( _C.G2_ELEM_dbl(self.group.bpg, newpt.elem, self.elem, _FFI.NULL) )
-    #     return newpt
-
     def inv(self):
-        """ Returns the inverse point. 
+        """ Returns the inverse element. 
             Example:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())
@@ -535,26 +528,26 @@ class GTElem(Ops):
         return newpt
 
     def sqr(self):
-        """ Returns the square of a point. """
+        """ Returns the square of an element. """
         newpt = GTElem(self.group)
         _check( _C.GT_ELEM_sqr(self.group.bpg, newpt.elem, self.elem, _FFI.NULL))
         return newpt
 
 
     def eq(self, other):
-        """ Returns True if points are equal. """
+        """ Returns True if elements are equal. """
         resp = _C.GT_ELEM_cmp(self.elem, other.elem)
         return (int(resp) == 0)
 
     @force_Bn(1)
     def exp(self, scalar):
-        """ Exponentiates the point with a scalar. """
+        """ Exponentiates the element with a scalar. """
         newpt = GTElem(self.group)
         _check( _C.GT_ELEM_exp(self.group.bpg, newpt.elem, self.elem, scalar.bn, _FFI.NULL) )
         return newpt
 
     def export(self):
-        """ Export a point to a byte representation. """
+        """ Export a GT element to a byte representation. """
         size = int(_C.GT_ELEM_elem2oct(self.group.bpg, self.elem, _FFI.NULL, 0, _FFI.NULL))
         
         out = _FFI.new("unsigned char[]", size)
@@ -565,7 +558,7 @@ class GTElem(Ops):
 
     @staticmethod
     def from_bytes(sbin, group):
-        """ Import a GT point from bytes.
+        """ Import a GT element from bytes.
             Export:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())
