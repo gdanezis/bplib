@@ -169,6 +169,9 @@ class Ops(object):
         except Exception as e:
             raise Exception("Equality Operation Failed: %s" % e.value())
 
+    def __hash__(self):
+        return self.export().__hash__()
+    
     def __ne__(self, other):
         return not self.__eq__(other)
 
@@ -479,7 +482,7 @@ class GTElem(Ops):
         return newpt
 
     def sub(self, other):
-        """ Returns the sum of two points. 
+        """ Returns the difference of two points. 
             Example:
                 >>> G = BpGroup()
                 >>> zero = GTElem.zero(G)
