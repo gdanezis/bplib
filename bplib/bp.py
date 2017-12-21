@@ -57,6 +57,7 @@ class BpGroup(object):
     """ A class representing all groups involved in the bilinear pairing: G1, G2, and GT. """
     
     bpq = None
+    _C = _C
 
     def __init__(self, nid=NID_fp254bnb, optimize_mult=True):
         """Build an BP group from the Open SSL nid."""
@@ -80,6 +81,8 @@ class BpGroup(object):
         self.inf = None
 
         self.p = None
+
+        self.math = _C
 
     def order(self):
         """Returns the order of the group as a Big Number.
@@ -157,11 +160,13 @@ class BpGroup(object):
     def __del__(self):
         """ Clears the Group object """
         if self.bpq is not None:
-            _C.BP_GROUP_clear_free(self.bpg)
+            self._C.BP_GROUP_clear_free(self.bpg)
 
 
 class Ops(object):
     """ A class to implement infix operations. """
+
+    _C = _C
 
     def __eq__(self, other):
         try:
@@ -305,7 +310,7 @@ class G1Elem(Ops):
 
     def __del__(self):
         if self.elem != None:
-            _C.G1_ELEM_clear_free(self.elem);
+            self._C.G1_ELEM_clear_free(self.elem);
 
 
 class G2Elem(Ops):
@@ -324,7 +329,7 @@ class G2Elem(Ops):
 
     def __del__(self):
         if self.elem != None:
-            _C.G2_ELEM_clear_free(self.elem);
+            self._C.G2_ELEM_clear_free(self.elem);
 
     def __copy__(self):
         """ Copy the G2 point. """
@@ -447,7 +452,7 @@ class GTElem(Ops):
 
     def __del__(self):
         if self.elem != None:
-            _C.GT_clear_free(self.elem);
+            self._C.GT_clear_free(self.elem);
 
     def __copy__(self):
         """ Copy the GT element. 
