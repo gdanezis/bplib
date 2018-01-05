@@ -30,6 +30,12 @@ Module bplib.bp.GXElem
     :members:
 
 
+Encoding and decoding bplib objects
+-----------------------------------
+
+The ``petlib.pack`` functions ``encode`` and ``decode`` may be used to get byte representations of ``BpGroup``, ``G1Elem``, ``G2Elem``, and ``GTElem``. Just ensure you import ``bplib`` before calling those functions.
+
+
 Indices and tables
 ==================
 

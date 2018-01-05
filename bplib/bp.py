@@ -86,6 +86,7 @@ class BpGroup(object):
 
     def order(self):
         """Returns the order of the group as a Big Number.
+        
         Example:
             >>> G = BpGroup()
             >>> print(G.order())
@@ -105,6 +106,7 @@ class BpGroup(object):
 
     def hashG1(self, sbin):
         """ Hashes a byte string into a point of G1. 
+        
         Example:
             >>> G = BpGroup()
             >>> g1 = G.gen1()
@@ -138,6 +140,7 @@ class BpGroup(object):
 
     def pair(self, g1, g2):
         """ The pairing operation e(G1, G2) -> GT. 
+        
             Example:
                 >>> G = BpGroup()
                 >>> g1, g2 = G.gen1(), G.gen2()
@@ -238,6 +241,7 @@ class G1Elem(Ops):
 
     def neg(self):
         """ Returns the inverse point. 
+        
             Example:
                 >>> G = BpGroup()
                 >>> g1 = G.gen1()
@@ -252,6 +256,7 @@ class G1Elem(Ops):
 
     def eq(self, other):
         """ Returns True if points are equal.
+        
             Example:
                 >>> G = BpGroup()
                 >>> g1 = G.gen1()
@@ -274,6 +279,7 @@ class G1Elem(Ops):
     @force_Bn(1)
     def mul(self, scalar):
         """ Multiplies the point with a scalar. 
+        
             Example:
                 >>> g1 = BpGroup().gen1()
                 >>> g1.mul(2).eq(g1.double())
@@ -296,6 +302,7 @@ class G1Elem(Ops):
     @staticmethod
     def from_bytes(sbin, group):
         """ Import a G1 point from bytes.
+        
             Export:
                 >>> G = BpGroup()
                 >>> g1 = G.gen1()
@@ -354,6 +361,7 @@ class G2Elem(Ops):
 
     def neg(self):
         """ Returns the inverse point. 
+        
             Example:
                 >>> g2 = BpGroup().gen2()
                 >>> g2.add(g2.neg()).isinf()
@@ -365,6 +373,7 @@ class G2Elem(Ops):
 
     def eq(self, other):
         """ Returns True if points are equal.
+        
             Example:
                 >>> G = BpGroup()
                 >>> g2 = G.gen2()
@@ -387,6 +396,7 @@ class G2Elem(Ops):
     @force_Bn(1)
     def mul(self, scalar):
         """ Multiplies the point with a scalar. 
+        
             Example:
                 >>> g2 = BpGroup().gen2()
                 >>> g2.mul(2).eq(g2.double())
@@ -409,6 +419,7 @@ class G2Elem(Ops):
     @staticmethod
     def from_bytes(sbin, group):
         """ Import a G2 point from bytes.
+
             Export:
                 >>> G = BpGroup()
                 >>> g2 = G.gen2()
@@ -459,6 +470,7 @@ class GTElem(Ops):
 
     def __copy__(self):
         """ Copy the GT element. 
+        
         Example:
             >>> G = BpGroup()
             >>> g1, g2 = G.gen1(), G.gen2()
@@ -473,6 +485,7 @@ class GTElem(Ops):
 
     def add(self, other):
         """ Returns the sum of two GT elements. 
+        
             Example:
                 >>> G = BpGroup()
                 >>> zero = GTElem.zero(G)
@@ -491,6 +504,7 @@ class GTElem(Ops):
 
     def sub(self, other):
         """ Returns the difference of two GT elements. 
+
             Example:
                 >>> G = BpGroup()
                 >>> zero = GTElem.zero(G)
@@ -507,6 +521,7 @@ class GTElem(Ops):
 
     def mul(self, other):
         """ Returns the product of two elements. 
+
             Example:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())
@@ -523,6 +538,7 @@ class GTElem(Ops):
 
     def inv(self):
         """ Returns the inverse element. 
+
             Example:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())
@@ -567,6 +583,7 @@ class GTElem(Ops):
     @staticmethod
     def from_bytes(sbin, group):
         """ Import a GT element from bytes.
+
             Export:
                 >>> G = BpGroup()
                 >>> gt = G.pair(G.gen1(), G.gen2())

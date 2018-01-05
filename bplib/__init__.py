@@ -1,7 +1,8 @@
 try:
-	from . import bp
+    from . import bp
+    from . import pack
 except:
-	pass
+    pass
 
 __doc__ = """The ``bplib`` is a library implementing support for computations on groups supporting 
 bilinear pairings, as used in modern cryptography. 
@@ -20,11 +21,11 @@ A set of bilinear EC groups is defined as:
 Such a BpGroup describes 3 groups G1, G2 and GT such that pair(G1,G2)->GT. Generators 
 for the groups G1 and G2 are denoted by:
 
-	>>> g1, g2 = G.gen1(), G.gen2()
+    >>> g1, g2 = G.gen1(), G.gen2()
 
 The special ``pair`` operation computes to pairing into GT:
 
-	>>> gt = G.pair(g1, g2)
+    >>> gt = G.pair(g1, g2)
 
 Operations are defined on all elements of G1, G2 or GT in a natural additive infix notation for G1 and G2, and a multiplicative notation for GT:
     
