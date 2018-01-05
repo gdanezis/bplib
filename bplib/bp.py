@@ -157,6 +157,9 @@ class BpGroup(object):
     def __copy__(self):
         return BpGroup(self.nid, self.optimize_mult)
 
+    def __eq__(self, G):
+        return G.nid == self.nid
+
     def __del__(self):
         """ Clears the Group object """
         if self.bpq is not None:
