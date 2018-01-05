@@ -3,4 +3,4 @@ pycparser>=2.10
 future>=0.14.3
 pytest>=2.5.0
 pytest-cov>=1.8.1
-petlib >= 0.0.30
+petlib >= 0.0.43
