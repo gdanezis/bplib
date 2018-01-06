@@ -20,10 +20,12 @@ from copy import copy
 from binascii import hexlify
 from hashlib import sha512
 
+from petlib.bn import Bn, force_Bn
+
+
 try:
     from .bindings import _FFI, _C
 
-    from petlib.bn import Bn, force_Bn
     from petlib.bindings import _C as petlibc
     import pytest
 
