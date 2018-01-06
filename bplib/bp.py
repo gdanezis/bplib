@@ -58,7 +58,11 @@ class BpGroup(object):
     """ A class representing all groups involved in the bilinear pairing: G1, G2, and GT. """
     
     bpq = None
-    _C = _C
+    try:
+        _C = _C
+    except:
+        _C = None
+        print("Mock for docs.")
 
     def __init__(self, nid=NID_fp254bnb, optimize_mult=True):
         """Build an BP group from the Open SSL nid."""
@@ -173,7 +177,11 @@ class BpGroup(object):
 class Ops(object):
     """ A class to implement infix operations. """
 
-    _C = _C
+    try:
+        _C = _C
+    except:
+        _C = None
+        print("Mock for docs.")
 
     def __eq__(self, other):
         try:
