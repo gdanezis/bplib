@@ -1,7 +1,10 @@
 from .bp import BpGroup, G1Elem, G2Elem, GTElem
-from petlib.pack import encode, decode, register_coders
 
-import msgpack
+try:
+    from petlib.pack import encode, decode, register_coders
+    import msgpack
+except:
+    print("Avoid imports to compile docs")
 
 def g_enc(obj):
     return msgpack.packb( obj.nid )
@@ -21,11 +24,13 @@ def pt_decoder(xtype):
         return pt
     return dec
 
-
-register_coders(BpGroup, 100, g_enc, g_dec)
-register_coders(G1Elem, 101, pt_enc, pt_decoder(G1Elem))
-register_coders(G2Elem, 102, pt_enc, pt_decoder(G2Elem))
-register_coders(GTElem, 103, pt_enc, pt_decoder(GTElem))
+try:
+    register_coders(BpGroup, 100, g_enc, g_dec)
+    register_coders(G1Elem, 101, pt_enc, pt_decoder(G1Elem))
+    register_coders(G2Elem, 102, pt_enc, pt_decoder(G2Elem))
+    register_coders(GTElem, 103, pt_enc, pt_decoder(GTElem))
+except:
+    print("Avoid imports to compile docs")
 
 
 def test_pack_trivial():

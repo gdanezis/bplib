@@ -16,14 +16,16 @@ As an example here is an implementation of the BLS signature scheme (Boneh, Lynn
 """
 
 from .bindings import _FFI, _C
-from petlib.bn import Bn, force_Bn
-from petlib.bindings import _C as petlibc
 
 from copy import copy
 from binascii import hexlify
 from hashlib import sha512
 
 try:
+    from petlib.bn import Bn, force_Bn
+    from petlib.bindings import _C as petlibc
+    import pytest
+
     from builtins import int        # pylint: disable=redefined-builtin
     from builtins import object     # pylint: disable=redefined-builtin
 except:                             # pylint: disable=bare-except
@@ -48,8 +50,6 @@ def _check(return_val):
 
         raise Exception("EC exception: %s" % return_val) 
 
-
-import pytest
 
 NID_fp254bnb = 1
 
