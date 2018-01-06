@@ -33,9 +33,11 @@ try:
     from builtins import object     # pylint: disable=redefined-builtin
 
     POINT_CONVERSION_COMPRESSED = petlibc.POINT_CONVERSION_COMPRESSED
+    POINT_CONVERSION_UNCOMPRESSED = petlibc.POINT_CONVERSION_UNCOMPRESSED
 
 except:                             # pylint: disable=bare-except
     POINT_CONVERSION_COMPRESSED = 0
+    POINT_CONVERSION_UNCOMPRESSED = 1
     print('Cannot mock for docs')
 
 try:
