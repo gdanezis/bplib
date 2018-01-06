@@ -31,7 +31,11 @@ try:
 
     from builtins import int        # pylint: disable=redefined-builtin
     from builtins import object     # pylint: disable=redefined-builtin
+
+    POINT_CONVERSION_COMPRESSED = petlibc.POINT_CONVERSION_COMPRESSED
+
 except:                             # pylint: disable=bare-except
+    POINT_CONVERSION_COMPRESSED = 0
     print('Cannot mock for docs')
 
 try:
@@ -300,7 +304,7 @@ class G1Elem(Ops):
         _check( _C.G1_ELEM_mul(self.group.bpg, newpt.elem, _FFI.NULL, self.elem, scalar.bn, _FFI.NULL) )
         return newpt
 
-    def export(self, form=petlibc.POINT_CONVERSION_COMPRESSED):
+    def export(self, form=POINT_CONVERSION_COMPRESSED):
         """ Export a point to a byte representation. """
         size = int(_C.G1_ELEM_point2oct(self.group.bpg, self.elem, form, _FFI.NULL, 0, _FFI.NULL))
 
@@ -417,7 +421,7 @@ class G2Elem(Ops):
         _check( _C.G2_ELEM_mul(self.group.bpg, newpt.elem, _FFI.NULL, self.elem, scalar.bn, _FFI.NULL) )
         return newpt
 
-    def export(self, form=petlibc.POINT_CONVERSION_UNCOMPRESSED):
+    def export(self, form=POINT_CONVERSION_UNCOMPRESSED):
         """ Export a point to a byte representation. """
         size = int(_C.G2_ELEM_point2oct(self.group.bpg, self.elem, form, _FFI.NULL, 0, _FFI.NULL))
         
