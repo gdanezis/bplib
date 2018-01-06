@@ -1,7 +1,7 @@
 # bplib
 A bilinear pairing library for petlib
 
-Documentation: http://pythonhosted.org/bplib/
+Documentation: http://bplib.readthedocs.io/en/latest/
 
 Pypi package: https://pypi.python.org/pypi/bplib
 
