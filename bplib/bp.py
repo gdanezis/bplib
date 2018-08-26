@@ -222,8 +222,8 @@ class Ops(object):
         return self.exp(other)
 
     def __neg__(self):
-        return
-
+        return self.neg()
+        
 class G1Elem(Ops):
 
     @staticmethod
@@ -583,8 +583,12 @@ class GTElem(Ops):
     @force_Bn(1)
     def exp(self, scalar):
         """ Exponentiates the element with a scalar. """
+        pt_elem = self
+        if scalar < 0:
+            pt_elem = self.inv()
+
         newpt = GTElem(self.group)
-        _check( _C.GT_ELEM_exp(self.group.bpg, newpt.elem, self.elem, scalar.bn, _FFI.NULL) )
+        _check( _C.GT_ELEM_exp(self.group.bpg, newpt.elem, pt_elem.elem, scalar.bn, _FFI.NULL) )
         return newpt
 
     def export(self):
@@ -615,3 +619,16 @@ class GTElem(Ops):
         _check( _C.GT_ELEM_oct2elem(group.bpg, newpt.elem, pt_bytes, len(sbin), _FFI.NULL) )
 
         return newpt
+
+def test_negatives():
+    G = BpGroup()
+    gt_v1 = G.pair(-G.gen1(), G.gen2())
+    gt_v2 = G.pair(G.gen1(), -G.gen2())
+    assert gt_v1 == gt_v2
+
+    assert (-5)*G.gen1() == 5 * (-G.gen1())
+    assert (-5)*G.gen1() != 5 * (G.gen1())
+
+    assert G.pair(-10 * G.gen1(), G.gen2()) == G.pair(G.gen1(), G.gen2())**(-10)
+    assert G.pair(10 * G.gen1(), -G.gen2()) == G.pair(G.gen1(), G.gen2())**(-10)
+
