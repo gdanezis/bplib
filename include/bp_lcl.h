@@ -69,6 +69,9 @@
 #include <openssl/bn.h>
 #include "bp.h"
 
+// This is for OpenSSL 1.1 compatibility
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+
 struct bignum_st {
     BN_ULONG *d;                /* Pointer to an array of 'BN_BITS2' bit
                                  * chunks. */
@@ -78,6 +81,8 @@ struct bignum_st {
     int neg;                    /* one if the number is negative */
     int flags;
 };
+
+#endif
 
 /********************************************************************/
 /*               Internal types for bilinear groups                 */
