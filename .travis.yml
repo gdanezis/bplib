@@ -14,7 +14,7 @@ before_install:
   - wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 
 install: 
-  - if [ "$OPENSSL_VERSION" = "1.1" ]; then sh petlib/scripts/install_openssl_v1_1.sh > /dev/null 2>&1; fi
+  - if [ "$OPENSSL_VERSION" = "1.1" ]; then sh bplib/scripts/install_openssl_v1_1.sh > /dev/null 2>&1; fi
   - pip install tox-travis
   - pip install -r requirements.txt
 
