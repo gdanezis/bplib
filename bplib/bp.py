@@ -20,7 +20,24 @@ from copy import copy
 from binascii import hexlify
 from hashlib import sha512
 
-from petlib.bn import Bn, force_Bn
+try:
+    from petlib.bn import Bn, force_Bn
+except:
+    print("Do not load petlib to build docs.")
+
+    from functools import wraps
+
+    def force_Bn(n):
+        """A decorator that coerces the nth input to be a Big Number"""
+
+        def convert_nth(f):
+            # pylint: disable=star-args
+            @wraps(f)
+            def new_f(*args, **kwargs):
+                new_args = args
+                return f(*new_args, **kwargs)
+            return new_f
+        return convert_nth
 
 
 try:
@@ -588,11 +605,11 @@ class GTElem(Ops):
         >>> g = G.pair(G.gen1(), G.gen2())
         >>> g**0 == g.one(G)
         True
-	>>> g**3 * g**5 == g**8
+        >>> g**3 * g**5 == g**8
         True
-	>>> g**10 * g**(-13) == g**(-3)
+        >>> g**10 * g**(-13) == g**(-3)
         True
-	>>> g**2 * g**(-2) == g.one(G)
+        >>> g**2 * g**(-2) == g.one(G)
         True
         """
         
