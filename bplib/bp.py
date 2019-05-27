@@ -582,7 +582,20 @@ class GTElem(Ops):
 
     @force_Bn(1)
     def exp(self, scalar):
-        """ Exponentiates the element with a scalar. """
+        """ Exponentiates the element with a scalar. 
+        Example:
+        >>> G = BpGroup()
+        >>> g = G.pair(G.gen1(), G.gen2())
+        >>> g**0 == g.one(G)
+        True
+	>>> g**3 * g**5 == g**8
+        True
+	>>> g**10 * g**(-13) == g**(-3)
+        True
+	>>> g**2 * g**(-2) == g.one(G)
+        True
+        """
+        
         pt_elem = self
         if scalar < 0:
             pt_elem = self.inv()

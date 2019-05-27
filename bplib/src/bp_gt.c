@@ -302,6 +302,9 @@ int GT_ELEM_cmp(const GT_ELEM *a, const GT_ELEM *b)
 
 int GT_ELEM_exp(const BP_GROUP *group, GT_ELEM *r, const GT_ELEM *a,
                 const BIGNUM *b, BN_CTX *ctx)
-{
+{   
+    if (BN_num_bits(b)==0 ){
+        return GT_ELEM_set_to_unity(group, r);
+    }
     return FP12_exp_cyclotomic(group, r->f, a->f, b, ctx);
 }
