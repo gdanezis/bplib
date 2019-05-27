@@ -16,7 +16,7 @@ setup(name='bplib',
 
       setup_requires=["cffi>=1.0.0",
                       "pytest >= 2.6.4",
-                      "petlib >= 0.0.43"],
+                      "petlib >= 0.0.45"],
       package_data = {
             "bplib": ["include/*.h"]},
       include_package_data = True,
