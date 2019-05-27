@@ -69,7 +69,29 @@
 
 #include "bp_lcl.h"
 
+
+static CRYPTO_ONCE once = CRYPTO_ONCE_STATIC_INIT;
+static CRYPTO_RWLOCK *lock;
+
+static void pre_lock_init(void)
+  {
+      lock = CRYPTO_THREAD_lock_new();
+  }
+
+  static int pre_lock(void)
+  {
+      if (!CRYPTO_THREAD_run_once(&once, pre_lock_init) || lock == NULL)
+          return 0;
+      return CRYPTO_THREAD_write_lock(lock);
+  }
+
+  static int pre_unlock(void)
+  {
+      return CRYPTO_THREAD_unlock(lock);
+  }
+
 #define BN_F_BN_COMPUTE_WNAF 142
+
 
 signed char *bn_compute_wNAF(const BIGNUM *scalar, int w, size_t *ret_len)
 {
@@ -103,10 +125,12 @@ signed char *bn_compute_wNAF(const BIGNUM *scalar, int w, size_t *ret_len)
         sign = -1;
     }
 
+    /*
     if (scalar->d == NULL || scalar->top == 0) {
         BNerr(BN_F_BN_COMPUTE_WNAF, ERR_R_INTERNAL_ERROR);
         goto err;
     }
+    */
 
     len = BN_num_bits(scalar);
     r = OPENSSL_malloc(len + 1); /*
@@ -190,6 +214,7 @@ signed char *bn_compute_wNAF(const BIGNUM *scalar, int w, size_t *ret_len)
     return NULL;
 }
 
+
 /*
  * Largely based on ec_mult.c
  *
@@ -232,26 +257,48 @@ static G2_PRE_COMP *g2_pre_comp_new(const BP_GROUP *group)
 
 G2_PRE_COMP *g2_pre_comp_dup(G2_PRE_COMP *pre)
 {
-    if (pre != NULL)
+    /* if (pre != NULL)
         CRYPTO_add(&pre->references, 1, CRYPTO_LOCK_EC_PRE_COMP);
+    */
+
+    if (pre_lock()){
+        pre->references ++;
+    }
+    pre_unlock();
     return pre;
 }
 
 void g2_pre_comp_free(G2_PRE_COMP *pre)
 {
+
+    /*
     if (pre == NULL
         || CRYPTO_add(&pre->references, -1, CRYPTO_LOCK_EC_PRE_COMP) > 0)
         return;
+    */
 
-    if (pre->points != NULL) {
-        G2_ELEM **pts;
-
-        for (pts = pre->points; *pts != NULL; pts++)
-            G2_ELEM_free(*pts);
-        OPENSSL_free(pre->points);
+    if(pre == NULL){
+        return;
     }
-    OPENSSL_free(pre);
+
+    if (pre_lock()){
+        pre->references --;
+
+        if (pre->references == 0){
+            if (pre->points != NULL) {
+                G2_ELEM **pts;
+
+                for (pts = pre->points; *pts != NULL; pts++)
+                    G2_ELEM_free(*pts);
+                OPENSSL_free(pre->points);
+            }
+            OPENSSL_free(pre);            
+        }
+    }
+    pre_unlock();
 }
+
+
 
 /*
  * Table should be optimised for the wNAF-based implementation,

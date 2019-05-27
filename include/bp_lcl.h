@@ -69,6 +69,16 @@
 #include <openssl/bn.h>
 #include "bp.h"
 
+struct bignum_st {
+    BN_ULONG *d;                /* Pointer to an array of 'BN_BITS2' bit
+                                 * chunks. */
+    int top;                    /* Index of last used d +1. */
+    /* The next are internal book keeping for bn_expand. */
+    int dmax;                   /* Size of the d array. */
+    int neg;                    /* one if the number is negative */
+    int flags;
+};
+
 /********************************************************************/
 /*               Internal types for bilinear groups                 */
 /********************************************************************/

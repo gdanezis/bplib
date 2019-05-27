@@ -47,6 +47,8 @@ ffibuilder.set_source("bplib._bplib","""
 #include <openssl/hmac.h>
 #include <openssl/ecdsa.h>
 
+#include <openssl/ossl_typ.h>
+
 #include <bp.h>
 
     """, libraries=libraries, 
