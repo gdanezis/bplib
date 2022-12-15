@@ -108,8 +108,8 @@ void FP2_clear_free(FP2 *a)
 
 int FP2_zero(FP2 *a)
 {
-    if (!BN_zero(a->f[0]) || !BN_zero(a->f[1]))
-        return 0;
+    BN_zero(a->f[0]);
+    BN_zero(a->f[1]);
     return 1;
 }
 
